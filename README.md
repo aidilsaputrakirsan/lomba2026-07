@@ -2,9 +2,9 @@
 
 Prototipe statis semua layar utama Tremvia, sistem skrining gangguan saraf berbasis kamera. Repo ini **hanya berisi desain antarmuka**: HTML + CSS + sedikit JavaScript, tanpa backend, tanpa build. Semua data di dalamnya adalah contoh.
 
-**Demo online:** https://aidilsaputrakirsan.github.io/lomba2026-07/
-**Kanvas semua layar:** https://aidilsaputrakirsan.github.io/lomba2026-07/layar.html
-**Design system:** https://aidilsaputrakirsan.github.io/lomba2026-07/design-system.html
+**Demo online:** http://myst-tech.com/lomba2026-07/
+**Kanvas semua layar:** http://myst-tech.com/lomba2026-07/layar.html
+**Design system:** http://myst-tech.com/lomba2026-07/design-system.html
 
 ## Daftar layar
 
@@ -40,7 +40,7 @@ Pilihan paling cepat adalah plugin **html.to.design** (gratis untuk beberapa imp
 
 1. Buka Figma, buat file baru.
 2. Menu **Plugins → html.to.design**.
-3. Tempel URL layar dari demo online, misalnya `https://aidilsaputrakirsan.github.io/lomba2026-07/dashboard.html`.
+3. Tempel URL layar dari demo online, misalnya `http://myst-tech.com/lomba2026-07/dashboard.html`.
 4. Pilih ukuran viewport: **1440** untuk desktop, **390** untuk HP. Centang mode terang atau gelap.
 5. Ulangi untuk setiap layar di tabel di atas. Hasilnya berupa frame Figma yang bisa diedit (teks, warna, auto layout).
 
