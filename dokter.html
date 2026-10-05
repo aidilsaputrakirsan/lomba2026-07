@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal Nakes · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .kpi { display: flex; flex-direction: column; gap: 6px; }
+    .kpi .v { font-size: 2.2rem; font-weight: 700; font-family: var(--font-display); line-height: 1.1; }
+    .search { position: relative; flex: 1; max-width: 340px; }
+    .search span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; color: var(--ink-3); }
+    .search .input { padding-left: 42px; min-height: 42px; border-radius: 99px; }
+    .pt { display: flex; align-items: center; gap: 10px; }
+    .pt .avatar { width: 34px; height: 34px; font-size: .75rem; }
+    tbody tr { cursor: pointer; }
+    .queue li { display: flex; gap: var(--s3); align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule-hair); }
+    .queue li:last-child { border: 0; }
+    .queue time { font-family: var(--font-mono); font-weight: 700; width: 52px; }
+    .lay { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--s4); margin-top: var(--s5); align-items: start; }
+    @media (max-width: 1040px) { .lay { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="appnav" aria-label="Navigasi utama">
+    <div class="wrap header-inner">
+      <a href="dokter.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <span class="role-tag hide-sm">Portal Nakes</span>
+      <div class="appnav-links">
+        <a href="dokter.html" class="on">Dashboard</a>
+        <a href="dokter-pasien.html">Pasien</a>
+        <a href="index.html#bukti">Edukasi</a>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Notifikasi" data-icon="bell"></button>
+        <button class="icon-btn" data-theme-toggle></button>
+        <button class="avatar" data-menu aria-haspopup="menu" aria-expanded="false">DW
+          <div class="menu" role="menu">
+            <div class="menu-head"><b>dr. Dewi Lestari, Sp.N</b><span>dr.dewi@tremvia.id</span></div>
+            <a href="#" role="menuitem">Profil</a>
+            <a href="masuk.html" class="danger" role="menuitem">Keluar</a>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap main">
+    <p class="xs">Poli Saraf · RS Sehat Sentosa (fiktif)</p>
+    <h1 class="page-title">Selamat pagi, dr. Dewi</h1>
+
+    <section class="grid-4" style="margin-top:var(--s5)">
+      <div class="card kpi"><span class="xs">Pasien tertaut</span><span class="v mono">50</span><span class="xs">+3 bulan ini</span></div>
+      <div class="card kpi card-lime"><span class="xs">Perlu ditinjau</span><span class="v mono">7</span><span class="xs">skor naik ≥ 5 poin</span></div>
+      <div class="card kpi"><span class="xs">Skrining minggu ini</span><span class="v mono">38</span><span class="xs">dari 50 pasien</span></div>
+      <div class="card kpi"><span class="xs">Kunjungan hari ini</span><span class="v mono">5</span><span class="xs">pra-kunjungan lengkap 4</span></div>
+    </section>
+
+    <div class="lay">
+      <section>
+        <div class="row between" style="margin-bottom:var(--s3)">
+          <h2 class="card-title">Pasien</h2>
+          <label class="search"><span data-icon="search"></span><input class="input" placeholder="Cari nama atau nomor RM" aria-label="Cari pasien"></label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Pasien</th><th>Usia</th><th>Sesi terakhir</th><th class="num">Skor</th><th>Tren</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">SH</span><span><b>Suharto H.</b><br><span class="xs">RM-00213</span></span></span></td><td>67</td><td>Hari ini</td><td class="num">58</td><td style="color:var(--high)">▲ 9</td><td><span class="status status-high">Tinggi</span></td></tr>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">RW</span><span><b>Rina Wulandari</b><br><span class="xs">RM-00188</span></span></span></td><td>59</td><td>Kemarin</td><td class="num">44</td><td style="color:var(--high)">▲ 6</td><td><span class="status status-mid">Sedang</span></td></tr>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">AP</span><span><b>Adhitya Pratama</b><br><span class="xs">RM-00342</span></span></span></td><td>54</td><td>Hari ini</td><td class="num">28</td><td style="color:var(--low)">▼ 4</td><td><span class="status status-low">Rendah</span></td></tr>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">MS</span><span><b>Maria Simanjuntak</b><br><span class="xs">RM-00097</span></span></span></td><td>72</td><td>3 hari lalu</td><td class="num">51</td><td class="muted">• 0</td><td><span class="status status-mid">Sedang</span></td></tr>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">BS</span><span><b>Budi Santoso</b><br><span class="xs">RM-00265</span></span></span></td><td>63</td><td>5 hari lalu</td><td class="num">33</td><td style="color:var(--low)">▼ 2</td><td><span class="status status-low">Rendah</span></td></tr>
+              <tr onclick="location.href='dokter-pasien.html'"><td><span class="pt"><span class="avatar">NF</span><span><b>Nur Fadilah</b><br><span class="xs">RM-00311</span></span></span></td><td>48</td><td>1 minggu lalu</td><td class="num">22</td><td style="color:var(--low)">▼ 1</td><td><span class="status status-low">Rendah</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="xs" style="margin-top:var(--s3)">Data pasien fiktif untuk prototipe.</p>
+      </section>
+
+      <aside class="stack">
+        <div class="card card-white">
+          <h2 class="card-title">Jadwal hari ini</h2>
+          <ul class="queue" style="list-style:none;padding:0;margin:var(--s3) 0 0">
+            <li><time>08.30</time><div><b>Suharto H.</b><br><span class="status status-high">Pra-kunjungan lengkap</span></div></li>
+            <li><time>09.15</time><div><b>Adhitya Pratama</b><br><span class="status status-low">Pra-kunjungan lengkap</span></div></li>
+            <li><time>10.00</time><div><b>Maria Simanjuntak</b><br><span class="xs">Belum skrining minggu ini</span></div></li>
+            <li><time>11.00</time><div><b>Rina Wulandari</b><br><span class="status status-mid">Pra-kunjungan lengkap</span></div></li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <h2 class="card-title">Undang pasien</h2>
+          <p class="small" style="margin-top:6px">Bagikan kode tautan supaya hasil skrining pasien masuk ke daftar Anda.</p>
+          <div class="row" style="margin-top:var(--s4)"><span class="mono" style="font-size:1.4rem;letter-spacing:.15em;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.1)">DW-7Q4K</span><button class="btn btn-lime btn-sm">Salin</button></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

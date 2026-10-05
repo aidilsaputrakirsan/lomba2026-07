@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detail Pasien · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .lay { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: var(--s4); margin-top: var(--s5); align-items: start; }
+    .profile .avatar { width: 72px; height: 72px; font-size: 1.4rem; }
+    .kv { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: .9rem; margin-top: var(--s4); }
+    .kv dt { color: var(--ink-3); } .kv dd { margin: 0; font-weight: 600; }
+    .flag { display: flex; gap: var(--s3); padding: var(--s4); border-radius: var(--r); background: var(--high-wash); color: var(--high); }
+    .flag svg { width: 20px; flex-shrink: 0; }
+    .mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
+    .mini > div { padding: var(--s4); border-radius: var(--r); background: var(--field); }
+    .mini b { display: block; font-size: 1.4rem; font-family: var(--font-display); }
+    .heat { display: grid; grid-template-columns: 120px repeat(8, minmax(0, 1fr)); gap: 4px; font-size: .78rem; align-items: center; }
+    .heat i { height: 28px; border-radius: 6px; }
+    .l0 { background: var(--low-wash); } .l1 { background: color-mix(in srgb, var(--mid-wash) 55%, var(--low-wash)); }
+    .l2 { background: var(--mid-wash); } .l3 { background: color-mix(in srgb, var(--mid) 55%, var(--field)); } .l4 { background: color-mix(in srgb, var(--high) 60%, var(--field)); }
+    textarea.input { min-height: 120px; padding: var(--s3) var(--s4); resize: vertical; }
+    .note { padding: var(--s4); border-radius: var(--r); background: var(--panel); }
+    @media (max-width: 1040px) { .lay { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .mini { grid-template-columns: 1fr; } .heat { grid-template-columns: 90px repeat(8, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <nav class="appnav" aria-label="Navigasi utama">
+    <div class="wrap header-inner">
+      <a href="dokter.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <span class="role-tag hide-sm">Portal Nakes</span>
+      <div class="appnav-links">
+        <a href="dokter.html">Dashboard</a>
+        <a href="dokter-pasien.html" class="on">Pasien</a>
+        <a href="index.html#bukti">Edukasi</a>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Notifikasi" data-icon="bell"></button>
+        <button class="icon-btn" data-theme-toggle></button>
+        <button class="avatar" data-menu aria-haspopup="menu" aria-expanded="false">DW
+          <div class="menu" role="menu">
+            <div class="menu-head"><b>dr. Dewi Lestari, Sp.N</b><span>dr.dewi@tremvia.id</span></div>
+            <a href="#" role="menuitem">Profil</a>
+            <a href="masuk.html" class="danger" role="menuitem">Keluar</a>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap main">
+    <a href="dokter.html" class="small" style="display:inline-flex;gap:4px;align-items:center;text-decoration:none"><span data-icon="left" style="width:16px"></span>Semua pasien</a>
+
+    <div class="lay">
+      <aside class="stack">
+        <div class="card profile">
+          <span class="avatar">SH</span>
+          <h1 class="page-title" style="margin-top:var(--s4);font-size:1.6rem">Suharto H.</h1>
+          <p class="small">Laki-laki · 67 tahun · Balikpapan</p>
+          <dl class="kv">
+            <dt>No. RM</dt><dd class="mono">RM-00213</dd>
+            <dt>Tertaut</dt><dd>14 Mar 2026</dd>
+            <dt>Sesi</dt><dd>22 skrining</dd>
+            <dt>Kunjungan</dt><dd>Hari ini, 08.30</dd>
+          </dl>
+          <div class="row" style="margin-top:var(--s5)"><button class="btn btn-dark btn-sm" data-icon="download">Laporan PDF</button><button class="btn btn-outline btn-sm" data-icon="msg">Pesan</button></div>
+        </div>
+        <div class="flag"><span data-icon="info"></span><div><b>Perlu ditinjau</b><p class="small" style="color:inherit">Skor naik 9 poin dalam 2 minggu. Penurunan terbesar pada ketukan jari kanan.</p></div></div>
+      </aside>
+
+      <section class="stack">
+        <div class="card">
+          <div class="row between"><h2 class="card-title">Ringkasan sesi terakhir</h2><span class="status status-high">Skor 58 · Tinggi</span></div>
+          <div class="mini" style="margin-top:var(--s4)">
+            <div><span class="xs">Tremor istirahat</span><b class="mono">5,6 Hz</b><span class="xs">amplitudo 2,4 mm</span></div>
+            <div><span class="xs">Ketukan jari</span><b class="mono">2,4 /s</b><span class="xs">penurunan 34 %</span></div>
+            <div><span class="xs">Asimetri lengan</span><b class="mono">27 %</b><span class="xs">kanan lebih kecil</span></div>
+          </div>
+        </div>
+
+        <div class="card card-white">
+          <h2 class="card-title">Peta perubahan 8 minggu</h2>
+          <p class="xs" style="margin-top:4px">Makin gelap makin jauh dari rentang normal.</p>
+          <div class="heat" style="margin-top:var(--s4)" id="heat"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Catatan klinis</h2>
+          <div class="note" style="margin-top:var(--s3)"><p class="small"><b>21 Sep 2026 · dr. Dewi</b><br>Tremor istirahat tangan kanan, pill-rolling ringan. Rencana evaluasi ulang 2 minggu, pertimbangkan DaTscan.</p></div>
+          <div class="field" style="margin-top:var(--s4)"><label for="nt">Tambah catatan</label><textarea id="nt" class="input" placeholder="Catatan hanya terlihat oleh tenaga medis"></textarea></div>
+          <button class="btn btn-dark" style="margin-top:var(--s3)">Simpan catatan</button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const rows = { 'Tremor': [1,1,2,2,2,3,3,4], 'Ketukan jari': [0,1,1,2,3,3,4,4], 'Pola jalan': [0,0,1,1,1,1,2,2], 'Ayunan lengan': [1,1,1,2,2,3,3,3], 'Keseimbangan': [0,0,0,1,1,1,1,1], 'Gerak lutut': [0,0,0,0,1,1,1,1] };
+    let h = '<span></span>' + Array.from({ length: 8 }, (_, i) => `<span class="xs" style="text-align:center">M${i + 1}</span>`).join('');
+    for (const [k, v] of Object.entries(rows)) h += `<span>${k}</span>` + v.map(l => `<i class="l${l}" title="${k}, level ${l}"></i>`).join('');
+    document.getElementById('heat').innerHTML = h;
+  </script>
+</body>
+</html>

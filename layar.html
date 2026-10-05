@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semua Layar · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body { background: var(--sheet); }
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: var(--s4); }
+    .flow span { padding: 6px 12px; border-radius: 99px; background: var(--field); border: 1px solid var(--rule); font-size: .82rem; font-weight: 600; }
+    .flow i { color: var(--ink-3); font-style: normal; }
+    .group { margin-top: var(--s7); }
+    .boards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--s5); margin-top: var(--s4); }
+    .board { display: flex; flex-direction: column; gap: 10px; text-decoration: none; }
+    .board .name { display: flex; justify-content: space-between; font-size: .85rem; font-weight: 600; }
+    .board .name span:last-child { font-family: var(--font-mono); color: var(--ink-3); font-weight: 400; }
+    .frame { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--rule); background: var(--field); box-shadow: var(--shadow); transition: transform .2s; }
+    .board:hover .frame { transform: translateY(-4px); }
+    .frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; pointer-events: none; }
+    .desk { aspect-ratio: 1440 / 1000; }
+    .mob-row { display: flex; gap: var(--s5); overflow-x: auto; padding-bottom: var(--s3); margin-top: var(--s4); }
+    .mob-row .board { flex: 0 0 200px; }
+    .mob { aspect-ratio: 390 / 844; border-radius: 26px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <div class="header-actions">
+        <button class="icon-btn" data-theme-toggle></button>
+        <a href="design-system.html" class="btn btn-outline btn-sm">Design system</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <span class="tag">Prototipe UI/UX · Lomba 2026</span>
+    <h1 class="page-title" style="margin-top:var(--s4)">Semua layar Tremvia</h1>
+    <p class="small" style="max-width:640px;margin-top:8px">Kanvas acuan untuk tim. Klik layar mana saja untuk membukanya dan mencoba alurnya. Data di semua layar adalah contoh.</p>
+    <div class="flow" aria-label="Alur utama pasien">
+      <span>Landing</span><i>→</i><span>Daftar / Masuk</span><i>→</i><span>Dashboard</span><i>→</i><span>Skrining (6 tes)</span><i>→</i><span>Hasil</span><i>→</i><span>Riwayat</span>
+    </div>
+
+    <div class="group">
+      <h2 class="section-title" style="font-size:1.4rem">Publik</h2>
+      <div class="boards" data-boards="index.html|01 Landing,masuk.html|02 Masuk,daftar.html|03 Daftar"></div>
+    </div>
+    <div class="group">
+      <h2 class="section-title" style="font-size:1.4rem">Pasien</h2>
+      <div class="boards" data-boards="dashboard.html|04 Dashboard,skrining.html|05 Skrining,hasil.html|06 Hasil,riwayat.html|07 Riwayat"></div>
+    </div>
+    <div class="group">
+      <h2 class="section-title" style="font-size:1.4rem">Tenaga medis</h2>
+      <div class="boards" data-boards="dokter.html|08 Portal Nakes,dokter-pasien.html|09 Detail Pasien"></div>
+    </div>
+    <div class="group">
+      <h2 class="section-title" style="font-size:1.4rem">Versi HP (390 px)</h2>
+      <div class="mob-row" data-boards="index.html|Landing,dashboard.html|Dashboard,skrining.html|Skrining,hasil.html|Hasil,riwayat.html|Riwayat,dokter.html|Portal Nakes" data-mobile></div>
+    </div>
+    <div class="group">
+      <h2 class="section-title" style="font-size:1.4rem">Fondasi</h2>
+      <div class="boards" data-boards="design-system.html|00 Design System"></div>
+    </div>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.querySelectorAll('[data-boards]').forEach(group => {
+      const mobile = group.hasAttribute('data-mobile');
+      const W = mobile ? 390 : 1440, H = mobile ? 844 : 1000;
+      group.innerHTML = group.dataset.boards.split(',').map(s => {
+        const [href, name] = s.split('|');
+        return `<a class="board" href="${href}"><span class="name"><span>${name}</span><span>${href}</span></span>
+          <span class="frame ${mobile ? 'mob' : 'desk'}"><iframe src="${href}" width="${W}" height="${H}" loading="lazy" tabindex="-1" title="${name}"></iframe></span></a>`;
+      }).join('');
+    });
+    // Skala tiap iframe mengikuti lebar bingkainya
+    const fit = () => document.querySelectorAll('.frame').forEach(f => {
+      const ifr = f.querySelector('iframe');
+      ifr.style.transform = `scale(${f.clientWidth / ifr.width})`;
+    });
+    addEventListener('resize', fit);
+    fit();
+  </script>
+</body>
+</html>

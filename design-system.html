@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design System · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    section { margin-top: var(--s7); }
+    h2.sec { font-size: 1.4rem; padding-bottom: var(--s3); border-bottom: 1px solid var(--rule); margin-bottom: var(--s5); }
+    .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s3); }
+    .sw div { border-radius: var(--r); overflow: hidden; border: 1px solid var(--rule-hair); background: var(--field); }
+    .sw i { display: block; height: 72px; }
+    .sw p { padding: 8px 10px; font-size: .8rem; line-height: 1.35; }
+    .sw code { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-3); }
+    .type > div { display: grid; grid-template-columns: 180px 1fr; gap: var(--s4); align-items: baseline; padding: var(--s3) 0; border-bottom: 1px solid var(--rule-hair); }
+    .spec { font-family: var(--font-mono); font-size: .75rem; color: var(--ink-3); }
+    .demo { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; padding: var(--s5); border-radius: var(--r-lg); background: var(--sheet); border: 1px solid var(--rule-hair); }
+    .poses { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s3); }
+    .poses div { padding: var(--s3); border-radius: var(--r); background: var(--panel); text-align: center; font-size: .8rem; }
+    .poses span { display: block; height: 100px; margin-bottom: 6px; }
+    .space { display: flex; flex-direction: column; gap: 6px; }
+    .space div { display: flex; align-items: center; gap: var(--s3); font-size: .8rem; }
+    .space i { display: block; height: 14px; background: var(--accent); border-radius: 3px; }
+    @media (max-width: 860px) { .poses { grid-template-columns: repeat(3, 1fr); } .type > div { grid-template-columns: 1fr; gap: 2px; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <nav class="pill-nav">
+        <a href="#warna">Warna</a><a href="#tipografi">Tipografi</a><a href="#komponen">Komponen</a><a href="#ilustrasi">Ilustrasi</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" data-theme-toggle></button>
+        <a href="layar.html" class="btn btn-dark btn-sm">Semua layar</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <span class="tag">Design system</span>
+    <h1 class="page-title" style="margin-top:var(--s4)">Klinis Tenang</h1>
+    <p class="small" style="max-width:640px;margin-top:8px">Hijau sage sebagai warna kerja, lime sebagai aksen penanda, netral hangat untuk bidang. Tenang untuk pengguna yang sedang khawatir, jelas untuk tenaga medis yang membaca cepat. Semua nilai di bawah tersedia sebagai variabel CSS di <code>assets/css/style.css</code> dan berganti otomatis di mode gelap (tombol bulan di kanan atas).</p>
+
+    <section id="warna">
+      <h2 class="sec">Warna</h2>
+      <h3 class="card-title" style="margin-bottom:var(--s3)">Merek</h3>
+      <div class="sw">
+        <div><i style="background:var(--accent-deep)"></i><p>Accent deep<br><code>--accent-deep #1f4f44</code></p></div>
+        <div><i style="background:var(--accent)"></i><p>Accent<br><code>--accent #2b6658</code></p></div>
+        <div><i style="background:var(--accent-soft)"></i><p>Accent soft<br><code>--accent-soft #dcebe3</code></p></div>
+        <div><i style="background:var(--accent-wash)"></i><p>Accent wash<br><code>--accent-wash #e3efe9</code></p></div>
+        <div><i style="background:var(--lime)"></i><p>Lime<br><code>--lime #e4f2b0</code></p></div>
+        <div><i style="background:var(--lime-ink)"></i><p>Lime ink<br><code>--lime-ink #2f3a12</code></p></div>
+      </div>
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Netral</h3>
+      <div class="sw">
+        <div><i style="background:var(--field)"></i><p>Field<br><code>--field #ffffff</code></p></div>
+        <div><i style="background:var(--sheet)"></i><p>Sheet<br><code>--sheet #f6f7f5</code></p></div>
+        <div><i style="background:var(--panel)"></i><p>Panel<br><code>--panel #eef0ed</code></p></div>
+        <div><i style="background:var(--inset)"></i><p>Inset<br><code>--inset #e6ebe7</code></p></div>
+        <div><i style="background:var(--ink)"></i><p>Ink<br><code>--ink #17201c</code></p></div>
+        <div><i style="background:var(--ink-2)"></i><p>Ink 2<br><code>--ink-2 #4b5650</code></p></div>
+        <div><i style="background:var(--ink-3)"></i><p>Ink 3<br><code>--ink-3 #66706a</code></p></div>
+      </div>
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Status klinis</h3>
+      <div class="sw">
+        <div><i style="background:var(--low)"></i><p>Rendah / normal<br><code>--low #367024</code></p></div>
+        <div><i style="background:var(--mid)"></i><p>Sedang / perhatikan<br><code>--mid #a4520c</code></p></div>
+        <div><i style="background:var(--high)"></i><p>Tinggi<br><code>--high #b5302a</code></p></div>
+        <div><i style="background:var(--low-wash)"></i><p>Low wash<br><code>--low-wash #e4f0dc</code></p></div>
+        <div><i style="background:var(--mid-wash)"></i><p>Mid wash<br><code>--mid-wash #f8ead9</code></p></div>
+        <div><i style="background:var(--high-wash)"></i><p>High wash<br><code>--high-wash #f8e1de</code></p></div>
+      </div>
+      <p class="xs" style="margin-top:var(--s3)">Status selalu dibawa dua penanda selain warna: titik dan label teks, supaya tetap terbaca oleh pengguna buta warna.</p>
+    </section>
+
+    <section id="tipografi">
+      <h2 class="sec">Tipografi</h2>
+      <div class="type">
+        <div><span class="spec">Display · Gabarito 700<br>48 / 1.15 · -2%</span><span style="font-family:var(--font-display);font-size:3rem;font-weight:700;line-height:1.15;letter-spacing:-.02em">Deteksi Dini</span></div>
+        <div><span class="spec">Title · Gabarito 700<br>36 / 1.2 · -2%</span><span style="font-family:var(--font-display);font-size:2.25rem;font-weight:700">6 Biomarker</span></div>
+        <div><span class="spec">Head · Gabarito 700<br>24 / 1.2</span><span style="font-family:var(--font-display);font-size:1.5rem;font-weight:700">Skor gerak terakhir</span></div>
+        <div><span class="spec">Card title · Gabarito 700<br>18 / 1.3</span><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700">Tips sebelum skrining</span></div>
+        <div><span class="spec">Body · Hanken Grotesk 400<br>16 / 1.6</span><span>Tremvia menganalisis tremor, pola jalan, dan biomarker motorik melalui kamera.</span></div>
+        <div><span class="spec">Small · Hanken Grotesk 400<br>14 / 1.55</span><span class="small">Setiap tes dipandu satu kalimat di layar.</span></div>
+        <div><span class="spec">Caption · Hanken Grotesk 400<br>12.5 / 1.45</span><span class="xs">Data contoh untuk prototipe.</span></div>
+        <div><span class="spec">Angka · JetBrains Mono 700<br>tabular</span><span class="mono" style="font-size:1.6rem;font-weight:700">4,1 Hz · 104 spm</span></div>
+      </div>
+    </section>
+
+    <section id="komponen">
+      <h2 class="sec">Komponen</h2>
+      <h3 class="card-title" style="margin-bottom:var(--s3)">Tombol</h3>
+      <div class="demo">
+        <button class="btn btn-dark">Primer</button>
+        <button class="btn btn-outline">Sekunder <span data-icon="right"></span></button>
+        <button class="btn btn-soft">Lunak</button>
+        <button class="btn btn-lime">Lime</button>
+        <button class="btn btn-danger">Bahaya</button>
+        <button class="btn btn-dark btn-sm">Kecil</button>
+        <button class="btn btn-dark btn-lg" data-icon="play">Besar + ikon</button>
+      </div>
+      <p class="xs" style="margin-top:8px">Tinggi minimal 46 px (besar 54 px) supaya mudah ditekan oleh pengguna dengan tremor.</p>
+
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Tag, chip, status</h3>
+      <div class="demo">
+        <span class="tag">Tag bagian</span>
+        <span class="chip">Parkinson</span>
+        <span class="status status-low">Rendah</span>
+        <span class="status status-mid">Sedang</span>
+        <span class="status status-high">Tinggi</span>
+        <span class="role-tag">Portal Nakes</span>
+        <span class="avatar">AP</span>
+      </div>
+
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Input</h3>
+      <div class="demo" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div class="field"><label>Email</label><input class="input" placeholder="nama@email.com"></div>
+        <div class="field"><label>Kota</label><select class="input"><option>Balikpapan</option></select></div>
+        <div class="field"><label>Segmen</label><div class="seg"><button class="on">Pasien</button><button>Nakes</button></div></div>
+      </div>
+
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Kartu</h3>
+      <div class="grid-4">
+        <div class="card"><b>Panel</b><p class="xs">Bidang default</p></div>
+        <div class="card card-white"><b>Putih</b><p class="xs">Di atas panel</p></div>
+        <div class="card card-lime"><b>Lime</b><p class="xs">Satu per baris, aksen</p></div>
+        <div class="card card-dark"><b>Gelap</b><p class="small">Ajakan bertindak</p></div>
+      </div>
+
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Jarak dan sudut</h3>
+      <div class="grid-2">
+        <div class="space">
+          <div><i style="width:4px"></i>s1 · 4</div><div><i style="width:8px"></i>s2 · 8</div><div><i style="width:12px"></i>s3 · 12</div><div><i style="width:16px"></i>s4 · 16</div>
+          <div><i style="width:24px"></i>s5 · 24</div><div><i style="width:32px"></i>s6 · 32</div><div><i style="width:48px"></i>s7 · 48</div><div><i style="width:64px"></i>s8 · 64</div>
+        </div>
+        <div class="row" style="align-items:flex-start">
+          <div style="width:80px;height:80px;border-radius:12px;background:var(--panel)"></div><span class="xs">r 12<br>input, kartu kecil</span>
+          <div style="width:80px;height:80px;border-radius:24px;background:var(--panel)"></div><span class="xs">r-lg 24<br>kartu, foto</span>
+          <div style="width:120px;height:40px;border-radius:999px;background:var(--panel)"></div><span class="xs">pill<br>tombol, tag</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="ilustrasi">
+      <h2 class="sec">Ilustrasi pose</h2>
+      <p class="small" style="margin-bottom:var(--s4)">Kerangka titik-sendi, bahasa visual yang sama dengan yang dibaca mesin. Garis putus-putus hijau = gerak yang diukur.</p>
+      <div class="poses">
+        <div><span data-pose="tremor"></span>Tremor</div>
+        <div><span data-pose="fingerTapping"></span>Ketukan Jari</div>
+        <div><span data-pose="gait"></span>Pola Jalan</div>
+        <div><span data-pose="armSwing"></span>Ayunan Lengan</div>
+        <div><span data-pose="posture"></span>Keseimbangan</div>
+        <div><span data-pose="rom"></span>Gerak Lutut</div>
+      </div>
+      <h3 class="card-title" style="margin:var(--s5) 0 var(--s3)">Ikon</h3>
+      <div class="demo" id="icons"></div>
+      <p class="xs" style="margin-top:8px">Garis 2 px, sudut membulat, gaya Lucide.</p>
+    </section>
+  </main>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const names = ['home','clock','book','help','play','arrow','right','left','shield','camera','cpu','video','user','users','out','search','download','check','info','timer','bell','file','msg','trend','lock','mail'];
+    document.getElementById('icons').innerHTML = names.map(n => `<span title="${n}" style="display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:var(--field)"><span style="width:22px;height:22px">${Tremvia.svg(n)}</span></span>`).join('');
+  </script>
+</body>
+</html>

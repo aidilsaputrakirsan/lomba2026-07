@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Masuk · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .auth { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); padding: var(--s4); }
+    .auth-form { display: flex; flex-direction: column; padding: var(--s5) var(--s6); }
+    .auth-form form { width: 100%; max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: var(--s4); }
+    .auth-side { position: relative; border-radius: var(--r-lg); overflow: hidden; }
+    .auth-side img { position: absolute; inset: 0; object-position: 50% 15%; }
+    .auth-quote { position: absolute; left: var(--s5); right: var(--s5); bottom: var(--s5); padding: var(--s5); border-radius: var(--r-lg); background: color-mix(in srgb, var(--field) 92%, transparent); backdrop-filter: blur(10px); }
+    .demo { border: 1.5px dashed var(--rule); border-radius: var(--r); padding: var(--s4); display: grid; gap: 6px; }
+    .demo button { display: flex; justify-content: space-between; padding: 8px 10px; border-radius: 8px; background: var(--panel); font-size: .85rem; }
+    .demo button:hover { background: var(--accent-wash); }
+    @media (max-width: 860px) { .auth { grid-template-columns: 1fr; } .auth-side { display: none; } .auth-form { padding: var(--s4); } }
+  </style>
+</head>
+<body>
+  <div class="auth">
+    <div class="auth-form">
+      <div class="row between">
+        <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+        <button class="icon-btn" data-theme-toggle></button>
+      </div>
+      <form onsubmit="event.preventDefault(); location.href = document.querySelector('[name=role]:checked').value">
+        <div>
+          <span class="tag">Selamat datang kembali</span>
+          <h1 class="page-title" style="margin-top:var(--s4)">Masuk ke Tremvia</h1>
+          <p class="small" style="margin-top:6px">Lanjutkan skrining atau lihat perkembangan hasil Anda.</p>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Masuk sebagai">
+          <label><input type="radio" name="role" value="dashboard.html" checked hidden><span class="segopt">Pasien</span></label>
+          <label><input type="radio" name="role" value="dokter.html" hidden><span class="segopt">Tenaga medis</span></label>
+        </div>
+        <div class="field"><label for="em">Email</label><input id="em" class="input" type="email" value="pasien@tremvia.id"></div>
+        <div class="field">
+          <div class="row between"><label for="pw">Kata sandi</label><a href="#" class="xs">Lupa kata sandi?</a></div>
+          <input id="pw" class="input" type="password" value="password123">
+        </div>
+        <button class="btn btn-dark btn-lg btn-block" type="submit">Masuk</button>
+        <div class="demo">
+          <span class="xs">Akun demo (prototipe)</span>
+          <button type="button" onclick="em.value='pasien@tremvia.id';document.querySelectorAll('[name=role]')[0].click()"><span>Pasien</span><span class="mono xs">pasien@tremvia.id</span></button>
+          <button type="button" onclick="em.value='dr.dewi@tremvia.id';document.querySelectorAll('[name=role]')[1].click()"><span>Dokter</span><span class="mono xs">dr.dewi@tremvia.id</span></button>
+        </div>
+        <p class="small" style="text-align:center">Belum punya akun? <a href="daftar.html"><b>Daftar gratis</b></a></p>
+      </form>
+    </div>
+    <aside class="auth-side">
+      <img src="assets/img/hero-doctor.jpg" alt="" class="cover">
+      <div class="auth-quote">
+        <p style="font-family:var(--font-display);font-size:1.15rem;font-weight:600">"Hasil skrining membantu dokter memulai pemeriksaan, bukan menggantikannya."</p>
+        <p class="xs" style="margin-top:8px">Prinsip desain Tremvia</p>
+      </div>
+    </aside>
+  </div>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <style>
+    .seg label { cursor: pointer; }
+    .segopt { display: block; padding: 8px 18px; border-radius: var(--r-pill); font-size: .9rem; font-weight: 600; color: var(--ink-2); }
+    .seg input:checked + .segopt { background: var(--field); color: var(--ink); box-shadow: var(--shadow); }
+  </style>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

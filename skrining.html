@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skrining · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .top { position: sticky; top: 0; z-index: 40; background: var(--field); border-bottom: 1px solid var(--rule-hair); }
+    .top .header-inner { min-height: 68px; }
+    .progress { display: flex; gap: 6px; flex: 1; max-width: 420px; margin: 0 auto; }
+    .progress span { flex: 1; height: 6px; border-radius: 99px; background: var(--inset); }
+    .progress .done { background: var(--accent); }
+    .progress .now { background: var(--lime); outline: 2px solid var(--accent); outline-offset: 1px; }
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .screen[hidden] { display: none; }
+    .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); }
+    .list { list-style: none; padding: 0; margin: var(--s4) 0 0; display: flex; flex-direction: column; gap: 8px; }
+    .list li { display: flex; align-items: center; gap: var(--s3); padding: 10px 14px; border-radius: var(--r); background: var(--field); }
+    .list .art { width: 34px; height: 40px; flex-shrink: 0; }
+    .list .mono { margin-left: auto; color: var(--accent); font-weight: 700; font-size: .85rem; }
+    .ins { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); align-items: stretch; }
+    .ins-art { display: grid; place-items: center; min-height: 360px; background: radial-gradient(circle at 50% 45%, var(--accent-wash), var(--panel) 70%); }
+    .ins-art span { width: 200px; height: 233px; }
+    .steps { counter-reset: s; list-style: none; padding: 0; margin: var(--s4) 0 0; display: flex; flex-direction: column; gap: 10px; }
+    .steps li { counter-increment: s; display: flex; gap: var(--s3); font-size: 1.02rem; }
+    .steps li::before { content: counter(s); display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--accent-deep); color: #fff; font-weight: 700; font-size: .85rem; }
+    .cam { position: relative; aspect-ratio: 16 / 10; max-height: 70vh; width: 100%; border-radius: var(--r-lg); overflow: hidden; background: radial-gradient(ellipse at 50% 40%, #2a3631, #0d1210 75%); color: #fff; }
+    .cam .figure { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 34%; height: 80%; }
+    .cam .figure .bone { stroke: rgba(255, 255, 255, .85); }
+    .cam .figure .head { fill: transparent; stroke: rgba(255, 255, 255, .85); }
+    .cam .figure .joint { fill: #e4f2b0; }
+    .cam .rec { position: absolute; top: var(--s4); left: var(--s4); display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 99px; background: rgba(0, 0, 0, .45); font-size: .85rem; font-weight: 600; }
+    .cam .rec::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #f04438; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: .2; } }
+    .cam .count { position: absolute; top: var(--s4); right: var(--s4); width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; background: conic-gradient(#e4f2b0 calc(var(--p, 0) * 1%), rgba(255, 255, 255, .15) 0); }
+    .cam .count span { width: 60px; height: 60px; border-radius: 50%; background: #121815; display: grid; place-items: center; }
+    .cam .cue { position: absolute; left: 50%; bottom: var(--s5); transform: translateX(-50%); padding: 12px 22px; border-radius: 99px; background: rgba(255, 255, 255, .95); color: #17201c; font-weight: 700; white-space: nowrap; max-width: 92%; overflow: hidden; text-overflow: ellipsis; }
+    .cam .live { position: absolute; left: var(--s4); bottom: 84px; display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: .78rem; opacity: .85; }
+    .cam .frame { position: absolute; inset: 8% 28%; border: 2px dashed rgba(228, 242, 176, .5); border-radius: 18px; }
+    .done-art { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); color: var(--lime-ink); margin: 0 auto; }
+    .done-art svg { width: 56px; height: 56px; }
+    @media (max-width: 860px) {
+      .intro, .ins { grid-template-columns: 1fr; }
+      .ins-art { min-height: 240px; } .ins-art span { width: 140px; height: 163px; }
+      .cam { aspect-ratio: 3 / 4; } .cam .figure { width: 60%; height: 70%; } .cam .frame { inset: 10% 12%; }
+      .cam .live { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap header-inner">
+      <a href="dashboard.html" class="btn btn-soft btn-sm" data-icon="left"><span class="hide-sm">Keluar</span></a>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <span class="small mono" id="stepLabel" style="white-space:nowrap">Persiapan</span>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <!-- 1. Intro -->
+    <section class="screen" id="s-intro">
+      <div class="intro">
+        <div class="card" style="display:flex;flex-direction:column">
+          <span class="tag" style="align-self:flex-start">Sebelum mulai</span>
+          <h1 class="page-title" style="margin-top:var(--s4)">Enam tes gerak, sekitar 5 menit</h1>
+          <p class="small" style="margin-top:8px">Setiap tes dipandu satu kalimat di layar. Video tidak diunggah, yang disimpan hanya angka hasil pengukuran.</p>
+          <ul class="list" id="testList"></ul>
+        </div>
+        <div class="card card-lime" style="display:flex;flex-direction:column;gap:var(--s4)">
+          <h2 class="card-title">Siapkan ruangan</h2>
+          <ul class="list" style="margin:0">
+            <li><span data-icon="camera" style="width:22px;color:var(--accent)"></span>Kamera sejajar dada, tidak bergoyang</li>
+            <li><span data-icon="info" style="width:22px;color:var(--accent)"></span>Ruangan terang, cahaya dari depan</li>
+            <li><span data-icon="users" style="width:22px;color:var(--accent)"></span>Ruang kosong 2 sampai 3 meter untuk tes berjalan</li>
+            <li><span data-icon="shield" style="width:22px;color:var(--accent)"></span>Ada pendamping jika keseimbangan kurang baik</li>
+          </ul>
+          <button class="btn btn-dark btn-lg" style="margin-top:auto" onclick="go(0)">Saya siap, mulai</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Instruksi -->
+    <section class="screen" id="s-ins" hidden>
+      <div class="ins">
+        <div class="card ins-art"><span id="insArt"></span></div>
+        <div class="card card-white" style="display:flex;flex-direction:column">
+          <span class="tag" style="align-self:flex-start" id="insTag"></span>
+          <h1 class="page-title" style="margin-top:var(--s4)" id="insName"></h1>
+          <p class="small" style="margin-top:6px" id="insDesc"></p>
+          <ol class="steps" id="insSteps"></ol>
+          <div class="row" style="margin-top:auto;padding-top:var(--s6)">
+            <button class="btn btn-dark btn-lg" onclick="record()" data-icon="video">Mulai rekam</button>
+            <button class="btn btn-soft btn-lg" onclick="next()">Lewati tes ini</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Rekam -->
+    <section class="screen" id="s-rec" hidden>
+      <div class="cam" role="img" aria-label="Simulasi tampilan kamera saat perekaman">
+        <div class="frame"></div>
+        <span class="figure" id="camFig"></span>
+        <div class="rec">Merekam</div>
+        <div class="count" id="count"><span id="countN">10</span></div>
+        <div class="live" id="live"></div>
+        <div class="cue" id="cue"></div>
+      </div>
+      <p class="xs" style="text-align:center;margin-top:var(--s3)">Simulasi prototipe. Di aplikasi asli, kotak ini menampilkan kamera dengan titik tubuh hasil deteksi pose.</p>
+    </section>
+
+    <!-- 4. Selesai -->
+    <section class="screen" id="s-done" hidden>
+      <div class="card" style="text-align:center;max-width:560px;margin:var(--s6) auto;padding:var(--s7) var(--s6)">
+        <div class="done-art" data-icon="check"></div>
+        <h1 class="page-title" style="margin-top:var(--s5)">Semua tes selesai</h1>
+        <p class="small" style="margin-top:8px">Hasil sudah dihitung dan disimpan ke riwayat Anda.</p>
+        <a href="hasil.html" class="btn btn-dark btn-lg" style="margin-top:var(--s5)">Lihat hasil</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+  <script>
+    const TESTS = [
+      { k: 'tremor', n: 'Tremor', d: 10, desc: 'Mengukur frekuensi dan amplitudo getaran tangan saat diam.', cue: 'Tahan tangan setinggi dada, rileks', steps: ['Duduk atau berdiri menghadap kamera', 'Angkat tangan kanan setinggi dada', 'Telapak menghadap ke bawah, jari rileks', 'Tahan tanpa menegangkan otot selama 10 detik'] },
+      { k: 'fingerTapping', n: 'Ketukan Jari', d: 10, desc: 'Mengukur kecepatan ketukan dan penurunan amplitudo akibat kelelahan gerak.', cue: 'Ketuk ibu jari dan telunjuk, selebar mungkin', steps: ['Angkat satu tangan menghadap kamera', 'Buka ibu jari dan telunjuk selebar mungkin', 'Ketuk keduanya secepat dan selebar mungkin', 'Lanjutkan tanpa berhenti selama 10 detik'] },
+      { k: 'gait', n: 'Pola Jalan', d: 15, desc: 'Mengukur kadense, panjang langkah, dan simetri berjalan.', cue: 'Berjalan lurus mendekati kamera', steps: ['Mundur 2 sampai 3 meter dari perangkat', 'Pastikan seluruh tubuh sampai kaki terlihat', 'Berjalan lurus mendekati kamera dengan langkah biasa', 'Terus berjalan sampai aba-aba selesai, sekitar 15 detik'] },
+      { k: 'armSwing', n: 'Ayunan Lengan', d: 15, desc: 'Mengukur selisih amplitudo ayunan lengan kiri dan kanan saat berjalan.', cue: 'Berjalan di tempat, biarkan lengan berayun', steps: ['Mundur sampai tubuh bagian atas terlihat penuh', 'Berjalan di tempat dengan langkah santai', 'Biarkan kedua lengan berayun alami selama 15 detik'] },
+      { k: 'posture', n: 'Keseimbangan', d: 15, desc: 'Mengukur goyangan titik berat tubuh saat berdiri diam.', cue: 'Berdiri diam, kaki selebar bahu', steps: ['Mundur sampai seluruh tubuh terlihat', 'Berdiri tegak, kaki selebar bahu, tangan di samping', 'Tahan posisi tanpa bergerak selama 15 detik'] },
+      { k: 'rom', n: 'Rentang Gerak Lutut', d: 10, desc: 'Mengukur sudut maksimum tekukan dan luruskan lutut.', cue: 'Tekuk dan luruskan lutut secara penuh', steps: ['Duduk menyamping di kursi, seluruh kaki terlihat kamera', 'Luruskan satu kaki ke depan sejauh yang nyaman', 'Tekuk kembali sejauh mungkin', 'Ulangi perlahan selama 10 detik'] },
+    ];
+    // Prototipe dipercepat: setiap tes direkam 5 detik, bukan durasi aslinya.
+    const DEMO_SECONDS = 5;
+    let i = -1, timer;
+
+    const $ = id => document.getElementById(id);
+
+    $('testList').innerHTML = TESTS.map((t, n) =>
+      `<li><span class="art">${window.__pose(t.k)}</span><span><b>${n + 1}. ${t.n}</b></span><span class="mono">${t.d} s</span></li>`).join('');
+
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => (s.hidden = s.id !== id));
+      $('progress').innerHTML = TESTS.map((_, n) => `<span class="${n < i ? 'done' : n === i ? 'now' : ''}"></span>`).join('');
+      $('stepLabel').textContent = i < 0 ? 'Persiapan' : i >= TESTS.length ? 'Selesai' : `Tes ${i + 1} dari ${TESTS.length}`;
+      scrollTo(0, 0);
+    }
+
+    function go(n) {
+      i = n;
+      if (i >= TESTS.length) return show('s-done');
+      const t = TESTS[i];
+      $('insTag').textContent = `Tes ${i + 1} dari ${TESTS.length} · ${t.d} detik`;
+      $('insName').textContent = t.n;
+      $('insDesc').textContent = t.desc;
+      $('insSteps').innerHTML = t.steps.map(s => `<li>${s}</li>`).join('');
+      $('insArt').innerHTML = window.__pose(t.k);
+      show('s-ins');
+    }
+    function next() { go(i + 1); }
+
+    function record() {
+      const t = TESTS[i];
+      $('camFig').innerHTML = window.__pose(t.k);
+      $('cue').textContent = t.cue;
+      show('s-rec');
+      let left = DEMO_SECONDS;
+      const tick = () => {
+        $('countN').textContent = left;
+        $('count').style.setProperty('--p', ((DEMO_SECONDS - left) / DEMO_SECONDS) * 100);
+        $('live').innerHTML = `pose: 33 titik · ${(28 + Math.random() * 3).toFixed(0)} fps<br>sinyal: ${(3.8 + Math.random()).toFixed(2)} Hz`;
+        if (left-- <= 0) { clearInterval(timer); next(); }
+      };
+      tick();
+      clearInterval(timer);
+      timer = setInterval(tick, 1000);
+    }
+
+    show('s-intro');
+  </script>
+</body>
+</html>

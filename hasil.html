@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hasil Skrining · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .summary { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--s4); margin-top: var(--s5); }
+    .score { font-size: 4.5rem; font-weight: 700; font-family: var(--font-display); line-height: 1; letter-spacing: -.03em; }
+    .scale { position: relative; height: 12px; border-radius: 99px; background: linear-gradient(90deg, var(--low), #d9b84a 50%, var(--high)); margin: var(--s5) 0 8px; }
+    .scale i { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; background: var(--field); border: 4px solid var(--ink); transform: translate(-50%, -50%); }
+    .bm { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: var(--s4); align-items: center; padding: var(--s4) var(--s5); border-bottom: 1px solid var(--rule-hair); }
+    .bm:last-child { border: 0; }
+    .bm .art { width: 44px; height: 52px; }
+    .range { position: relative; height: 8px; border-radius: 99px; background: var(--inset); margin-top: 10px; }
+    .range .ok { position: absolute; top: 0; bottom: 0; border-radius: 99px; background: var(--low-wash); outline: 1px solid var(--low); }
+    .range i { position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: var(--accent-deep); transform: translate(-50%, -50%); border: 2px solid var(--field); }
+    .bm-val { text-align: right; }
+    .bm-val b { font-size: 1.3rem; font-family: var(--font-display); }
+    @media (max-width: 860px) { .summary { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .bm { grid-template-columns: 40px minmax(0, 1fr); } .bm-val { grid-column: 2; text-align: left; } .bm .art { width: 36px; height: 42px; } }
+  </style>
+</head>
+<body class="has-tabbar">
+  <nav class="appnav" aria-label="Navigasi utama">
+    <div class="wrap header-inner">
+      <a href="dashboard.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <div class="appnav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="riwayat.html">Riwayat</a>
+        <a href="hasil.html" class="on">Laporan</a>
+        <a href="index.html#cara">Bantuan</a>
+      </div>
+      <div class="header-actions">
+        <a href="skrining.html" class="btn btn-dark btn-sm hide-sm" data-icon="play">Mulai Tes Skrining</a>
+        <button class="icon-btn" data-theme-toggle></button>
+        <button class="avatar" data-menu aria-haspopup="menu" aria-expanded="false">AP
+          <div class="menu" role="menu">
+            <div class="menu-head"><b>Adhitya Pratama</b><span>pasien@tremvia.id</span></div>
+            <a href="#" role="menuitem">Profil</a>
+            <a href="masuk.html" class="danger" role="menuitem">Keluar</a>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap main">
+    <a href="riwayat.html" class="small" style="display:inline-flex;gap:4px;align-items:center;text-decoration:none"><span data-icon="left" style="width:16px"></span>Riwayat</a>
+    <div class="row between" style="margin-top:var(--s3)">
+      <div>
+        <h1 class="page-title">Hasil skrining #16</h1>
+        <p class="small">Senin, 5 Oktober 2026 · 09.12 WITA · 6 dari 6 tes</p>
+      </div>
+      <div class="row">
+        <button class="btn btn-outline" data-icon="download">Unduh PDF</button>
+        <button class="btn btn-dark" data-icon="msg">Kirim ke dokter</button>
+      </div>
+    </div>
+
+    <section class="summary">
+      <div class="card">
+        <span class="tag">Skor gerak gabungan</span>
+        <div class="row" style="margin-top:var(--s4);align-items:flex-end">
+          <span class="score mono">28</span><span class="small" style="padding-bottom:10px">dari 100</span>
+          <span class="status status-low" style="margin-left:auto">Risiko rendah</span>
+        </div>
+        <div class="scale"><i style="left:28%"></i></div>
+        <div class="row between xs"><span>0 · rendah</span><span>50</span><span>100 · tinggi</span></div>
+      </div>
+      <div class="card card-lime">
+        <h2 class="card-title">Apa artinya?</h2>
+        <p class="small" style="margin-top:8px">Sebagian besar biomarker dalam rentang normal. <b>Ketukan jari</b> dan <b>rentang gerak lutut</b> sedikit di bawah rentang, dan keduanya turun dalam 3 sesi terakhir.</p>
+        <p class="small" style="margin-top:8px">Saran: ulangi skrining minggu depan. Bila tren berlanjut, tunjukkan laporan ini ke dokter saraf.</p>
+      </div>
+    </section>
+
+    <section class="card card-white" style="margin-top:var(--s4);padding:0;overflow:hidden">
+      <div style="padding:var(--s5) var(--s5) var(--s3)"><h2 class="card-title">Rincian per biomarker</h2><p class="xs">Bidang hijau pada garis adalah rentang normal.</p></div>
+      <div class="bm"><span class="art" data-pose="tremor"></span><div><b>Tremor</b> <span class="status status-low">Normal</span><div class="range"><span class="ok" style="left:0;width:40%"></span><i style="left:36%"></i></div></div><div class="bm-val"><b class="mono">4,1</b> <span class="xs">Hz</span><br><span class="xs">amplitudo 0,8 mm</span></div></div>
+      <div class="bm"><span class="art" data-pose="fingerTapping"></span><div><b>Ketukan Jari</b> <span class="status status-mid">Perhatikan</span><div class="range"><span class="ok" style="left:50%;width:30%"></span><i style="left:42%"></i></div></div><div class="bm-val"><b class="mono">3,2</b> <span class="xs">ketukan/s</span><br><span class="xs">penurunan amplitudo 18 %</span></div></div>
+      <div class="bm"><span class="art" data-pose="gait"></span><div><b>Pola Jalan</b> <span class="status status-low">Normal</span><div class="range"><span class="ok" style="left:40%;width:35%"></span><i style="left:44%"></i></div></div><div class="bm-val"><b class="mono">104</b> <span class="xs">langkah/menit</span><br><span class="xs">simetri 94 %</span></div></div>
+      <div class="bm"><span class="art" data-pose="armSwing"></span><div><b>Ayunan Lengan</b> <span class="status status-low">Normal</span><div class="range"><span class="ok" style="left:0;width:45%"></span><i style="left:24%"></i></div></div><div class="bm-val"><b class="mono">8</b> <span class="xs">% asimetri</span><br><span class="xs">kiri 42°, kanan 39°</span></div></div>
+      <div class="bm"><span class="art" data-pose="posture"></span><div><b>Keseimbangan</b> <span class="status status-low">Normal</span><div class="range"><span class="ok" style="left:0;width:50%"></span><i style="left:32%"></i></div></div><div class="bm-val"><b class="mono">6,4</b> <span class="xs">mm goyangan</span><br><span class="xs">arah dominan: depan-belakang</span></div></div>
+      <div class="bm"><span class="art" data-pose="rom"></span><div><b>Rentang Gerak Lutut</b> <span class="status status-mid">Perhatikan</span><div class="range"><span class="ok" style="left:55%;width:30%"></span><i style="left:50%"></i></div></div><div class="bm-val"><b class="mono">118</b> <span class="xs">derajat</span><br><span class="xs">kaki kanan</span></div></div>
+    </section>
+
+    <p class="small" style="margin-top:var(--s5);display:flex;gap:8px"><span data-icon="info" style="width:18px;flex-shrink:0;color:var(--accent)"></span>Hasil ini skrining awal, bukan diagnosis. Keputusan klinis tetap di tangan dokter.</p>
+  </main>
+
+  <nav class="tabbar" aria-label="Navigasi bawah">
+    <a href="dashboard.html" data-icon="home">Beranda</a>
+    <a href="skrining.html" data-icon="play">Skrining</a>
+    <a href="riwayat.html" data-icon="clock">Riwayat</a>
+    <a href="hasil.html" class="on" data-icon="file">Laporan</a>
+  </nav>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

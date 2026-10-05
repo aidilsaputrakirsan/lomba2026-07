@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riwayat · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .main { padding-top: var(--s6); padding-bottom: var(--s8); }
+    .chart { position: relative; height: 260px; margin-top: var(--s4); }
+    .chart svg { width: 100%; height: 100%; overflow: visible; }
+    .chart .grid line { stroke: var(--rule-hair); }
+    .chart .grid text { fill: var(--ink-3); font-size: 11px; font-family: var(--font-mono); }
+    .chart .band { fill: var(--low-wash); }
+    .chart .line { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+    .chart .pt { fill: var(--field); stroke: var(--accent); stroke-width: 2.5; }
+    .chart .last { fill: var(--accent); }
+    td a { font-weight: 600; }
+  </style>
+</head>
+<body class="has-tabbar">
+  <nav class="appnav" aria-label="Navigasi utama">
+    <div class="wrap header-inner">
+      <a href="dashboard.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <div class="appnav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="riwayat.html" class="on">Riwayat</a>
+        <a href="hasil.html">Laporan</a>
+        <a href="index.html#cara">Bantuan</a>
+      </div>
+      <div class="header-actions">
+        <a href="skrining.html" class="btn btn-dark btn-sm hide-sm" data-icon="play">Mulai Tes Skrining</a>
+        <button class="icon-btn" data-theme-toggle></button>
+        <button class="avatar" data-menu aria-haspopup="menu" aria-expanded="false">AP
+          <div class="menu" role="menu">
+            <div class="menu-head"><b>Adhitya Pratama</b><span>pasien@tremvia.id</span></div>
+            <a href="#" role="menuitem">Profil</a>
+            <a href="masuk.html" class="danger" role="menuitem">Keluar</a>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap main">
+    <h1 class="page-title">Riwayat skrining</h1>
+    <p class="small">16 sesi sejak 22 Juni 2026</p>
+
+    <section class="card" style="margin-top:var(--s5)">
+      <div class="row between">
+        <h2 class="card-title">Tren biomarker</h2>
+        <div class="seg" data-tabs>
+          <button class="on" data-tab="tremor">Tremor</button>
+          <button data-tab="tap">Ketukan</button>
+          <button data-tab="gait">Jalan</button>
+        </div>
+      </div>
+      <div class="chart" data-chart="tremor" data-unit="Hz" data-lo="0" data-hi="4" data-vals="5.1,4.9,5.0,4.7,4.8,4.6,4.5,4.6,4.4,4.5,4.3,4.4,4.2,4.4,4.4,4.1"></div>
+      <div class="chart" data-chart="tap" data-unit="/s" data-lo="4" data-hi="6" data-vals="4.4,4.3,4.4,4.2,4.1,4.2,4.0,3.9,4.0,3.8,3.7,3.7,3.6,3.6,3.6,3.2" hidden></div>
+      <div class="chart" data-chart="gait" data-unit="spm" data-lo="100" data-hi="120" data-vals="96,97,98,97,99,98,100,99,101,100,101,102,101,102,102,104" hidden></div>
+      <p class="xs" style="margin-top:var(--s3)">Bidang hijau = rentang normal. Data contoh untuk prototipe.</p>
+    </section>
+
+    <section style="margin-top:var(--s6)">
+      <div class="row between" style="margin-bottom:var(--s3)">
+        <h2 class="card-title">Semua sesi</h2>
+        <button class="btn btn-soft btn-sm" data-icon="download">Ekspor CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sesi</th><th>Tanggal</th><th>Tes</th><th class="num">Skor</th><th>Status</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Navigasi bawah">
+    <a href="dashboard.html" data-icon="home">Beranda</a>
+    <a href="skrining.html" data-icon="play">Skrining</a>
+    <a href="riwayat.html" class="on" data-icon="clock">Riwayat</a>
+    <a href="hasil.html" data-icon="file">Laporan</a>
+  </nav>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Tab grafik
+    document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('[data-chart]').forEach(c => (c.hidden = c.dataset.chart !== b.dataset.tab));
+    }));
+
+    document.querySelectorAll('[data-chart]').forEach(el => {
+      const v = el.dataset.vals.split(',').map(Number);
+      const lo = +el.dataset.lo, hi = +el.dataset.hi;
+      const mn = Math.min(...v, lo) * 0.97, mx = Math.max(...v, hi) * 1.02;
+      const W = 1000, H = 240, padL = 44;
+      const x = i => padL + (i / (v.length - 1)) * (W - padL - 10);
+      const y = val => H - ((val - mn) / (mx - mn)) * (H - 20) - 10;
+      let g = '<g class="grid">';
+      for (let k = 0; k <= 4; k++) {
+        const val = mn + ((mx - mn) * k) / 4;
+        g += `<line x1="${padL}" x2="${W}" y1="${y(val)}" y2="${y(val)}"/><text x="0" y="${y(val) + 4}">${val.toFixed(val < 10 ? 1 : 0)}</text>`;
+      }
+      g += '</g>';
+      const band = `<rect class="band" x="${padL}" width="${W - padL}" y="${y(hi)}" height="${y(lo) - y(hi)}"/>`;
+      const d = v.map((val, i) => `${i ? 'L' : 'M'}${x(i)} ${y(val)}`).join(' ');
+      const pts = v.map((val, i) => `<circle class="pt${i === v.length - 1 ? ' last' : ''}" cx="${x(i)}" cy="${y(val)}" r="${i === v.length - 1 ? 6 : 4}"/>`).join('');
+      el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${band}${g}<path class="line" d="${d}" vector-effect="non-scaling-stroke"/>${pts}</svg>`;
+    });
+
+    // Baris tabel contoh
+    const scores = [42, 40, 41, 38, 39, 37, 35, 36, 34, 33, 33, 31, 31, 30, 32, 28];
+    const rows = scores.map((s, i) => {
+      const d = new Date(2026, 5, 22 + i * 7);
+      const st = s >= 40 ? ['mid', 'Sedang'] : ['low', 'Rendah'];
+      return `<tr><td class="mono">#${i + 1}</td><td>${d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</td><td>${i === 4 ? '5/6' : '6/6'}</td><td class="num">${s}</td><td><span class="status status-${st[0]}">${st[1]}</span></td><td><a href="hasil.html">Detail</a></td></tr>`;
+    }).reverse();
+    document.getElementById('rows').innerHTML = rows.join('');
+  </script>
+</body>
+</html>

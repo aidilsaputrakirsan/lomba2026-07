@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremvia · Skrining Gerak</title>
+  <meta name="description" content="Prototipe UI/UX Tremvia, skrining gangguan saraf berbasis kamera.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin-top: var(--s3); }
+    .hero-text { display: flex; flex-direction: column; padding: var(--s7) var(--s6); }
+    .hero-title { margin-top: var(--s5); font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.15; letter-spacing: -0.02em; }
+    .hl { background: var(--field); border-radius: 10px; padding: 0 8px; color: var(--accent-deep); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .hero-photo { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 460px; background: var(--panel); }
+    .hero-photo img { position: absolute; inset: 0; object-position: 50% 20%; }
+    .badge { position: absolute; right: 0; bottom: 0; display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s5) var(--s3) var(--s3); background: var(--field); border-top-left-radius: var(--r-lg); }
+    .badge strong { display: block; font-size: 1.15rem; }
+    .badge-ic { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--accent-wash); color: var(--accent); }
+    .badge-ic svg { width: 18px; }
+    .dots { display: flex; }
+    .dots span { width: 48px; height: 48px; margin-left: -10px; padding: 6px; border-radius: 50%; background: var(--field); border: 3px solid var(--panel); }
+    .dots span:first-child { margin-left: 0; }
+    .dots .n { display: grid; place-items: center; background: var(--lime); color: var(--lime-ink); font-weight: 800; }
+    .trio > .card { display: flex; flex-direction: column; min-height: 190px; }
+    .photo-card { flex-direction: row !important; gap: var(--s3); padding-right: 0; padding-bottom: 0; overflow: hidden; }
+    .photo-card > div { flex: 1; padding-bottom: var(--s5); }
+    .photo-card figure { position: relative; margin: 0; width: 44%; flex-shrink: 0; border-top-left-radius: var(--r); overflow: hidden; }
+    .photo-card figure img { position: absolute; inset: 0; }
+    .link-u { margin-top: auto; padding-top: var(--s4); font-weight: 600; font-size: .9rem; display: inline-flex; gap: 4px; align-items: center; }
+    .link-u svg { width: 14px; }
+    .tests { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--s5); margin-top: var(--s8); padding-right: 0; padding-bottom: 0; overflow: hidden; scroll-margin-top: 100px; }
+    .tests-main { padding-bottom: var(--s6); }
+    .test-grid { list-style: none; padding: 0; margin: var(--s5) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
+    .test { position: relative; display: flex; flex-direction: column; gap: 4px; padding: var(--s4); border-radius: var(--r); background: var(--field); transition: transform .2s, box-shadow .2s; }
+    .test:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .test > span:first-child { position: absolute; top: 12px; right: 12px; color: var(--ink-3); }
+    .test > span:first-child svg { width: 16px; }
+    .test .art { width: 52px; height: 60px; margin-bottom: 8px; }
+    .test b { line-height: 1.3; }
+    .test .dur { margin-top: auto; padding-top: 8px; font-size: .8rem; font-weight: 700; color: var(--accent); }
+    .tests figure { position: relative; margin: 0; border-top-left-radius: var(--r-lg); overflow: hidden; }
+    .tests figure img { position: absolute; inset: 0; object-position: 50% 15%; }
+    .how { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 300px; gap: var(--s4); margin: var(--s4) 0 var(--s8); scroll-margin-top: 100px; }
+    .how-body { display: flex; flex-direction: column; }
+    .steps { list-style: none; padding: 0; margin: var(--s3) 0 0; display: flex; flex-direction: column; gap: var(--s3); }
+    .steps li { display: flex; gap: var(--s3); }
+    .steps li > span { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: #1f4f44; color: #fff; }
+    .steps li > span svg { width: 15px; }
+    .steps b { display: block; font-size: .9rem; }
+    .steps small { font-size: .8rem; line-height: 1.45; display: block; }
+    .plate { display: flex; flex-direction: column; justify-content: center; gap: var(--s4); }
+    .plate .hand { width: 90px; height: 105px; margin: 0 auto; }
+    .readout { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); text-align: center; }
+    .readout b { display: block; font-size: 1.3rem; font-family: var(--font-display); }
+    .band { background: var(--panel); padding: var(--s8) 0; scroll-margin-top: 80px; }
+    .center { text-align: center; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--s3); }
+    .stats { max-width: 900px; margin: var(--s6) auto var(--s4); }
+    .stat { display: flex; flex-direction: column; gap: 8px; padding: var(--s6); border-radius: var(--r-lg); background: var(--field); }
+    .stat .v { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; font-family: var(--font-display); letter-spacing: -.02em; }
+    .closing { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: var(--s5); flex-wrap: wrap; margin: var(--s8) 0; padding: var(--s7); border-radius: var(--r-lg); }
+    .closing h2 { font-size: clamp(1.6rem, 2.8vw, 2.25rem); }
+    .closing p { max-width: 520px; margin-top: 8px; }
+    @media (max-width: 1040px) {
+      .how { grid-template-columns: 1fr 1fr; }
+      .how-body { grid-column: 1 / -1; order: -1; }
+      .tests { grid-template-columns: minmax(0, 1fr); padding-right: var(--s6); }
+      .tests figure { display: none; }
+    }
+    @media (max-width: 860px) {
+      .hero, .how { grid-template-columns: minmax(0, 1fr); }
+      .hero-photo { min-height: 380px; order: -1; }
+      .test-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .hero-text { padding: var(--s5); }
+      .hero-title { font-size: 1.9rem; }
+      .test-grid { grid-template-columns: minmax(0, 1fr); }
+      .closing { padding: var(--s6) var(--s5); }
+      .tests { padding-right: var(--s5); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+      <nav class="pill-nav" aria-label="Bagian halaman">
+        <a href="#diukur">Yang diukur</a>
+        <a href="#cara">Cara kerja</a>
+        <a href="#bukti">Bukti</a>
+        <a href="design-system.html">Design system</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" data-theme-toggle></button>
+        <a href="masuk.html" class="btn btn-outline hide-sm">Masuk</a>
+        <a href="skrining.html" class="btn btn-dark hide-xs">Coba tanpa akun</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="card hero-text">
+        <span class="tag" style="align-self:flex-start">Skrining gerak pra-kunjungan</span>
+        <h1 class="hero-title">Deteksi Dini Gangguan Saraf <span class="hl">Dari Kamera Anda</span></h1>
+        <hr class="hr">
+        <p class="small" style="font-size:1rem">Tremvia menganalisis tremor, pola jalan, dan biomarker motorik melalui kamera perangkat Anda, membantu deteksi awal Parkinson dan gangguan neurologis lainnya tanpa perangkat tambahan.</p>
+        <div class="row" style="margin-top:var(--s5)">
+          <a href="skrining.html" class="btn btn-dark">Coba tanpa akun</a>
+          <a href="daftar.html" class="btn btn-outline" data-icon="right">Mulai Skrining Mandiri</a>
+        </div>
+        <hr class="hr">
+        <div class="row">
+          <div class="dots" aria-hidden="true">
+            <span data-pose="tremor"></span><span data-pose="fingerTapping"></span><span data-pose="gait"></span><span class="n">6</span>
+          </div>
+          <p class="xs">6 tes gerak terpandu, cukup kamera<br>75 s · tanpa sensor tambahan</p>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/img/hero-doctor-hijab.jpg" alt="Seorang dokter berhijab dan bermasker mengarahkan stetoskop ke depan." class="cover">
+        <div class="badge">
+          <span class="badge-ic" data-icon="shield"></span>
+          <div><strong>60,6 %</strong><span class="xs">akurasi uji internal</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tiga kartu -->
+    <section class="grid-3 trio" style="margin-top:var(--s4)">
+      <div class="card photo-card">
+        <div>
+          <h2 class="card-title">Video tidak keluar dari perangkat</h2>
+          <p class="small" style="margin-top:8px">Deteksi titik tubuh berjalan di dalam browser. Yang terkirim hanya angka hasil pengukuran.</p>
+        </div>
+        <figure><img src="assets/img/consult.jpg" alt="Dokter berkonsultasi dengan pasien lansia." class="cover"></figure>
+      </div>
+      <div class="card card-lime">
+        <h2 class="card-title">Kondisi yang Dapat Dideteksi:</h2>
+        <ul class="chips" style="margin-top:var(--s4)">
+          <li class="chip">Parkinson</li><li class="chip">Essential Tremor</li><li class="chip">Pasca Stroke</li><li class="chip">Ataksia Serebelar</li>
+        </ul>
+        <a href="#bukti" class="link-u">Pelajari lebih lanjut <span data-icon="right"></span></a>
+      </div>
+      <div class="card" style="position:relative;overflow:hidden">
+        <h2 class="card-title">Enam tes, 75 detik rekam</h2>
+        <p class="small" style="margin-top:8px">Cukup kamera dan browser. Tidak ada sensor, tidak ada jam tangan pintar, tidak ada pemasangan aplikasi.</p>
+        <div data-wave="0.4" style="position:absolute;left:0;right:0;bottom:0;opacity:.5"></div>
+      </div>
+    </section>
+
+    <!-- Tes -->
+    <section id="diukur" class="card tests">
+      <div class="tests-main reveal">
+        <span class="tag">Tes</span>
+        <h2 class="section-title" style="margin-top:var(--s4)">6 Biomarker yang Dianalisis</h2>
+        <p class="small" style="margin-top:8px">Setiap parameter diukur menggunakan estimasi pose dari kamera, tanpa sensor fisik tambahan.</p>
+        <ol class="test-grid">
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="tremor"></span><b>Tremor</b><span class="xs">Mengukur frekuensi dan amplitudo getaran tangan saat diam.</span><span class="dur">10 s</span></li>
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="fingerTapping"></span><b>Ketukan Jari</b><span class="xs">Mengukur kecepatan ketukan dan penurunan amplitudo akibat kelelahan gerak.</span><span class="dur">10 s</span></li>
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="gait"></span><b>Pola Jalan</b><span class="xs">Mengukur kadense, panjang langkah, dan simetri berjalan.</span><span class="dur">15 s</span></li>
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="armSwing"></span><b>Ayunan Lengan</b><span class="xs">Mengukur selisih amplitudo ayunan lengan kiri dan kanan saat berjalan.</span><span class="dur">15 s</span></li>
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="posture"></span><b>Keseimbangan</b><span class="xs">Mengukur goyangan titik berat tubuh saat berdiri diam.</span><span class="dur">15 s</span></li>
+          <li class="test"><span data-icon="arrow"></span><span class="art" data-pose="rom"></span><b>Rentang Gerak Lutut</b><span class="xs">Mengukur sudut maksimum tekukan dan luruskan lutut.</span><span class="dur">10 s</span></li>
+        </ol>
+      </div>
+      <figure aria-hidden="true"><img src="assets/img/hero-doctor.jpg" alt="" class="cover"></figure>
+    </section>
+
+    <!-- Cara kerja -->
+    <section id="cara" class="how">
+      <figure class="card plate" style="margin:0">
+        <span class="hand" data-pose="tremor"></span>
+        <div data-wave="1"></div>
+        <div class="readout">
+          <div><b class="mono">10</b><span class="xs">detik</span></div>
+          <div><b class="mono">5,2</b><span class="xs">Hz dominan</span></div>
+          <div><b class="mono">1,8</b><span class="xs">mm amplitudo</span></div>
+        </div>
+        <figcaption class="xs" style="text-align:center">Contoh pola tremor istirahat, bukan pengukuran seseorang.</figcaption>
+      </figure>
+      <div class="card how-body">
+        <span class="tag" style="align-self:flex-start">Cara kerja</span>
+        <h2 class="section-title" style="margin-top:var(--s4)">Perhitungannya terjadi di perangkat Anda</h2>
+        <p class="small" style="margin-top:8px">Deteksi titik tubuh dan penghitungan biomarker berjalan di dalam browser Anda. Video tidak pernah diunggah, tidak pernah disimpan, dan tidak pernah melewati server kami. Yang dikirim hanya angka hasil pengukuran.</p>
+        <div class="row" style="margin-top:var(--s5)">
+          <a href="skrining.html" class="btn btn-dark">Coba tanpa akun</a>
+          <a href="#diukur" class="btn btn-outline">Lihat tes <span data-icon="right"></span></a>
+        </div>
+      </div>
+      <div class="card card-lime">
+        <h3 class="card-title">Tiga langkah</h3>
+        <ol class="steps">
+          <li><span data-icon="video"></span><div><b>1. Rekam</b><small>Ikuti satu instruksi gerakan di layar. Kamera membaca titik tubuh selama beberapa detik.</small></div></li>
+          <li><span data-icon="cpu"></span><div><b>2. Ukur</b><small>Frekuensi, amplitudo, simetri, dan kecepatan gerak dihitung di perangkat Anda.</small></div></li>
+          <li><span data-icon="book"></span><div><b>3. Baca artinya</b><small>Setiap angka tampil bersama rentang normalnya, jadi Anda tahu apa yang dibandingkan.</small></div></li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bukti -->
+  <section id="bukti" class="band">
+    <div class="wrap reveal">
+      <div class="center">
+        <span class="tag">Bukti</span>
+        <h2 class="section-title">Dari mana angkanya datang</h2>
+        <p class="small">Halaman ini tidak menampilkan satu pun angka yang tidak bisa ditelusuri asalnya.</p>
+      </div>
+      <div class="grid-3 stats">
+        <div class="stat"><span class="v mono" data-count="997">997</span><span class="xs">Profil sintetis referensi</span></div>
+        <div class="stat"><span class="v mono" data-count="249">249</span><span class="xs">Profil uji terpisah</span></div>
+        <div class="stat card-lime"><span class="v mono"><span data-count="60.6">60,6</span> %</span><span class="xs">Akurasi uji internal</span></div>
+      </div>
+      <p class="xs" style="text-align:center">Akurasi dihitung dari validasi holdout 80/20 pada dataset sintetis (bukan uji klinis pada pasien nyata).</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="closing card-dark">
+      <div>
+        <h2>Mulai Skrining Sekarang</h2>
+        <p class="small">Gratis, privat, dan tidak memerlukan perangkat tambahan, hanya kamera.</p>
+      </div>
+      <div class="row">
+        <a href="daftar.html" class="btn btn-lime">Buat Akun dan Mulai Skrining</a>
+        <a href="masuk.html" class="btn btn-ghost">Sudah Punya Akun</a>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap stack">
+      <p class="small">Tremvia adalah alat skrining awal, bukan alat diagnosis. Hasilnya membantu dokter memulai pemeriksaan, bukan menggantikannya.</p>
+      <p class="xs">Mengacu pada MDS-UPDRS · Hoehn &amp; Yahr · Zhang dkk. 2017 · Zanardi dkk. 2021 · Lewek dkk. 2010</p>
+      <p class="xs">Foto: StockSnap.io (CC0) dan Unsplash (Lisensi Unsplash). Prototipe UI/UX, data contoh.</p>
+    </div>
+  </footer>
+
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar · Tremvia</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .auth { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); padding: var(--s4); }
+    .auth-form { display: flex; flex-direction: column; padding: var(--s5) var(--s6); }
+    .auth-form form { width: 100%; max-width: 440px; margin: var(--s6) auto; display: flex; flex-direction: column; gap: var(--s4); }
+    .auth-side { border-radius: var(--r-lg); padding: var(--s7); display: flex; flex-direction: column; justify-content: center; gap: var(--s5); }
+    .benefit { display: flex; gap: var(--s3); }
+    .benefit span { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--field); color: var(--accent-deep); }
+    .benefit span svg { width: 18px; }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--ink-2); }
+    .check input { margin-top: 4px; accent-color: var(--accent); width: 18px; height: 18px; }
+    @media (max-width: 860px) { .auth { grid-template-columns: 1fr; } .auth-side { order: 2; padding: var(--s5); } .auth-form { padding: var(--s4); } }
+  </style>
+</head>
+<body>
+  <div class="auth">
+    <div class="auth-form">
+      <div class="row between">
+        <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""><span><b>TREM</b> <i>VIA</i></span></a>
+        <button class="icon-btn" data-theme-toggle></button>
+      </div>
+      <form onsubmit="event.preventDefault(); location.href='dashboard.html'">
+        <div>
+          <span class="tag">Gratis, tanpa alat tambahan</span>
+          <h1 class="page-title" style="margin-top:var(--s4)">Buat akun pasien</h1>
+          <p class="small" style="margin-top:6px">Akun menyimpan riwayat skrining supaya perubahannya bisa dibandingkan antar sesi.</p>
+        </div>
+        <div class="field"><label for="nm">Nama lengkap</label><input id="nm" class="input" placeholder="Contoh: Adhitya Pratama"></div>
+        <div class="grid-2">
+          <div class="field"><label for="dob">Tanggal lahir</label><input id="dob" class="input" type="date"></div>
+          <div class="field"><label for="g">Jenis kelamin</label><select id="g" class="input"><option>Pilih</option><option>Laki-laki</option><option>Perempuan</option></select></div>
+        </div>
+        <div class="field"><label for="city">Kota</label><select id="city" class="input"><option>Balikpapan</option><option>Samarinda</option><option>Jakarta</option><option>Surabaya</option></select></div>
+        <div class="field"><label for="em">Email</label><input id="em" class="input" type="email" placeholder="nama@email.com"></div>
+        <div class="field"><label for="pw">Kata sandi</label><input id="pw" class="input" type="password" placeholder="Minimal 8 karakter"></div>
+        <label class="check"><input type="checkbox" checked> Saya paham Tremvia adalah alat skrining awal, bukan diagnosis, dan hasilnya perlu ditinjau tenaga medis.</label>
+        <button class="btn btn-dark btn-lg btn-block" type="submit">Buat akun</button>
+        <p class="small" style="text-align:center">Sudah punya akun? <a href="masuk.html"><b>Masuk</b></a></p>
+      </form>
+    </div>
+    <aside class="auth-side card-lime">
+      <h2 class="section-title">Yang Anda dapat</h2>
+      <div class="benefit"><span data-icon="shield"></span><div><b>Video tetap di perangkat</b><p class="small">Hanya angka hasil pengukuran yang disimpan.</p></div></div>
+      <div class="benefit"><span data-icon="trend"></span><div><b>Perkembangan antar sesi</b><p class="small">Skrining pertama jadi titik acuan, sesi berikutnya dibandingkan dengannya.</p></div></div>
+      <div class="benefit"><span data-icon="file"></span><div><b>Laporan untuk dokter</b><p class="small">Unduh PDF ringkas untuk dibawa saat kunjungan ke Poli Saraf.</p></div></div>
+      <div class="benefit"><span data-icon="timer"></span><div><b>Sekitar 5 menit</b><p class="small">Enam tes terpandu, total 75 detik perekaman.</p></div></div>
+    </aside>
+  </div>
+  <div class="proto-bar">Prototipe <a href="layar.html">Semua layar</a></div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
